@@ -2,3 +2,5 @@
 .env*
 .vercel
 Thumbs.db
+
+.vercel
