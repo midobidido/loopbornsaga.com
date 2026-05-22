@@ -107,16 +107,33 @@ document.addEventListener('keydown',e=>{
   if(e.key === 'Escape') closeModal();
 });
 
-function handleSubscribe(e){
+async function handleSubscribe(e){
   e.preventDefault();
   const form = e.target;
   const email = form.querySelector('input').value;
-  // TODO: wire to ConvertKit
-  form.innerHTML = `<div style="color:var(--gold);font-size:16px;font-style:italic;text-align:center;width:100%;padding:14px 0;line-height:1.6">
-    You're in. Welcome to the loop, friend.<br>
-    <span style="color:var(--ash);font-size:13px;font-style:normal">Check your inbox. Your singles are on the way.</span>
-  </div>`;
-  console.log('Subscriber:', email);
+  const btn = form.querySelector('button');
+  btn.textContent = 'Joining...';
+  btn.disabled = true;
+
+  try {
+    const res = await fetch('https://api.kit.com/v4/forms/9472917/subscribers', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Kit-Api-Key': 'y7d4oZwQdi6gnAoOllV1Tw'
+      },
+      body: JSON.stringify({ email_address: email })
+    });
+    if (!res.ok) throw new Error('API error');
+    form.innerHTML = `<div style="color:var(--gold);font-size:16px;font-style:italic;text-align:center;width:100%;padding:14px 0;line-height:1.6">
+      You're in. Welcome to the loop, friend.<br>
+      <span style="color:var(--ash);font-size:13px;font-style:normal">Check your inbox. Your singles are on the way.</span>
+    </div>`;
+  } catch(err) {
+    btn.textContent = 'Join the Loop →';
+    btn.disabled = false;
+    form.insertAdjacentHTML('afterend','<p style="color:var(--hot-pink);font-size:13px;margin-top:8px;text-align:center">Something went wrong. Try again in a moment.</p>');
+  }
 }
 
 (function updateFoundersCounter(){
