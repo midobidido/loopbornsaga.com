@@ -4,7 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Loopborn Saga — by Mike Van Doorn</title>
-<meta name="description" content="The Loopborn Saga — a transmedia sci-fi space opera by Mike Van Doorn / Outer Spaces Studios. A dog chased a squirrel through a hole in reality. Now her family has to save the universe.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..900,0..100,0..1&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="description" content="The Loopborn Saga — a transmedia sci-fi space opera by Mike Van Doorn / Outer Spaces Studios. A dog chased a squirrel through a hole in reality. Now her family has to save the universe.">
 
 <!-- ════════════════════════════════════════════════════════════
      THE LOOPBORN SAGA — Official Site
@@ -38,17 +41,26 @@
     /* Type stack:
        --font-display = the cinematic title face. Impact reads great at large sizes.
        --font-ui      = small UI text. Heavy sans-serif reads cleaner than Impact under 18px. */
-    --font-display:Impact,"Arial Black","Helvetica Neue",sans-serif;
-    --font-ui:"Helvetica Neue",-apple-system,BlinkMacSystemFont,Arial,sans-serif;
+    --font-display:"Fraunces", Georgia, serif;
+    --font-ui:"Inter Tight", -apple-system, BlinkMacSystemFont, Arial, sans-serif;
   }
 
   body{
-    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-family:var(--font-ui);
     background:var(--void);
     color:var(--bone);
     overflow-x:hidden;
     line-height:1.6;
     min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+  }
+  /* Fraunces optical sizing — characterful at display sizes, refined at small */
+  .hero h1, .section-title, .book-title, .char-name, .vault-name, .modal-title,
+  .newsletter h3, .tier-name, .tier-price, .founders-wrap h3, .founders-counter,
+  .music-cta h3 {
+    font-variation-settings:"opsz" 144, "SOFT" 30, "WONK" 1;
+    font-weight:400;
+    letter-spacing:-0.02em;
   }
 
   /* ─── COSMIC BACKGROUND ─── */
@@ -372,6 +384,41 @@
   }
   .book-status.live{background:rgba(0,217,255,.1);border:1px solid var(--electric);color:var(--electric)}
   .book-status.dev{background:rgba(154,146,179,.1);border:1px solid var(--ash);color:var(--ash)}
+
+  /* ── PER-PART PALETTES — modular saga visual identity ── */
+  .book-card.p1 { --part-accent: #e8a04a; --part-glow: rgba(232,160,74,0.18); }    /* Part I: PNW dusk gold */
+  .book-card.p2 { --part-accent: #4ad8c8; --part-glow: rgba(74,216,200,0.18); }    /* Part II: Nathiri teal */
+  .book-card.p3 { --part-accent: #ff4e8e; --part-glow: rgba(255,78,142,0.18); }    /* Part III: glitch pink */
+  .book-card.p4 { --part-accent: #9c7bff; --part-glow: rgba(156,123,255,0.18); }   /* Part IV: cosmic violet */
+
+  .book-card.p1, .book-card.p2, .book-card.p3, .book-card.p4 {
+    position:relative;
+    overflow:hidden;
+  }
+  .book-card.p1::before, .book-card.p2::before, .book-card.p3::before, .book-card.p4::before {
+    content:"";
+    position:absolute;
+    top:0; right:0; bottom:0; left:0;
+    background:
+      radial-gradient(ellipse 70% 50% at 100% 0%, var(--part-glow), transparent 60%),
+      radial-gradient(ellipse 50% 40% at 0% 100%, var(--part-glow), transparent 70%);
+    opacity:0.5;
+    transition:opacity 0.4s;
+    pointer-events:none;
+    z-index:0;
+  }
+  .book-card.p1:hover::before, .book-card.p2:hover::before,
+  .book-card.p3:hover::before, .book-card.p4:hover::before { opacity:1; }
+  .book-card.p1 > *, .book-card.p2 > *, .book-card.p3 > *,
+  .book-card.p4 > * { position:relative; z-index:1; }
+  .book-card.p1 .book-part, .book-card.p2 .book-part,
+  .book-card.p3 .book-part, .book-card.p4 .book-part {
+    color: var(--part-accent);
+  }
+  .book-card.p1:hover, .book-card.p2:hover,
+  .book-card.p3:hover, .book-card.p4:hover {
+    border-color: var(--part-accent);
+  }
   .book-buttons{display:flex;flex-direction:column;gap:8px}
   .book-btn{
     text-align:center;
@@ -999,7 +1046,7 @@
   </p>
 
   <div class="books-grid reveal">
-    <div class="book-card">
+    <div class="book-card p1">
       <div class="book-cover no-img" data-num="1">
         <img src="covers/book-01.png" alt="Part One cover"
              onload="this.parentElement.classList.remove('no-img')"
@@ -1015,12 +1062,12 @@
       </p>
       <div class="book-buttons">
         <a class="book-btn disabled" href="#">$1.21 Direct · Checkout Soon</a>
-        <a class="book-btn disabled" href="#">Kindle · Link Coming Soon</a>
+        <a class="book-btn kindle" href="https://www.amazon.com/WORLD-Dancing-Night-Away-Loopborn-ebook/dp/B0H4K5358B" target="_blank" rel="noopener">Read on Kindle →</a>
         <a class="book-btn disabled" href="#">Apple Books · Link Coming Soon</a>
       </div>
     </div>
 
-    <div class="book-card">
+    <div class="book-card p2">
       <div class="book-cover no-img" data-num="2">
         <img src="covers/book-02.png" alt="Part Two cover"
              onload="this.parentElement.classList.remove('no-img')"
@@ -1040,7 +1087,7 @@
       </div>
     </div>
 
-    <div class="book-card">
+    <div class="book-card p3">
       <div class="book-cover no-img" data-num="3">
         <img src="covers/book-03.png" alt="Part Three cover"
              onload="this.parentElement.classList.remove('no-img')"
@@ -1061,7 +1108,7 @@
       </div>
     </div>
 
-    <div class="book-card">
+    <div class="book-card p4">
       <div class="book-cover no-img" data-num="4">
         <img src="covers/book-04.png" alt="Part Four cover"
              onload="this.parentElement.classList.remove('no-img')"
@@ -1133,8 +1180,8 @@
     <div class="char-card">
       <span class="char-glyph">🤠</span>
       <div class="char-name">James</div>
-      <div class="char-role">The Cowboy · Mack's Partner</div>
-      <p class="char-blurb">Mack's partner. Goalie. Quietly competent. Calgary Flames fan in an Oilers household, by marriage. Stops pucks. Hauls firewood. Holds his ground.</p>
+      <div class="char-role">Mack's Partner · Calgary</div>
+      <p class="char-blurb">Hockey goalie. Cowboy. Contractor. Stops pucks, rides horses, builds things that hold. Calgary Flames fan in an Oilers household, by marriage.</p>
     </div>
     <div class="char-card">
       <span class="char-glyph">🎭</span>
